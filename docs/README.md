@@ -10,10 +10,6 @@
 
 ## Figuras extraídas del informe
 
-Las imágenes de `img/` se extrajeron directamente del PDF, sin modificaciones (solo se aplanó la
-transparencia sobre fondo blanco). La numeración sigue la del informe. Las figuras 1 y 6 del informe
-son dibujos vectoriales, no imágenes; en [arquitectura.md](arquitectura.md) se reconstruyen como
-diagramas a partir del texto y las tablas del informe.
 
 | Archivo | Figura del informe |
 |---------|--------------------|
