@@ -3,7 +3,7 @@
 ![FPGA](https://img.shields.io/badge/FPGA-Cyclone%20IV%20EP4CE6-0071C5)
 ![HDL](https://img.shields.io/badge/HDL-Verilog-orange)
 ![Herramienta](https://img.shields.io/badge/Quartus%20Prime-Lite-blue)
-![Estado](https://img.shields.io/badge/estado-entregado-success)
+![Estado](terminado)
 
 Proyecto final de **Electrónica Digital 1** — Programa de Ingeniería Eléctrica, Facultad de
 Ingeniería, Universidad Nacional de Colombia, Bogotá D.C.
