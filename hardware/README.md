@@ -68,7 +68,7 @@ Decisiones de diseño:
 | Prototipo preliminar (madera y balso) | Montaje final (chasis impreso en 3D) |
 |:---:|:---:|
 | <img src="../docs/img/fig08_prototipo_preliminar.jpg" width="300" alt="Prototipo preliminar"> | <img src="../docs/img/fig09_montaje_final.jpg" width="300" alt="Montaje final"> |
-| *Figura 8 del informe* | *Figura 9 del informe* |
+| *Figura 8* | *Figura 9* |
 
 El prototipo preliminar sirvió para comprobar que el sombreado diferencial producía una señal de
 error utilizable y para fijar la separación y altura de los tabiques. De él salieron dos correcciones
