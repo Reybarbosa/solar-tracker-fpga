@@ -23,7 +23,7 @@ transmitida.
 
 ![Sistema en funcionamiento con telemetría](img/fig10_sistema_funcionando_telemetria.jpg)
 
-*Figura 10 del informe — la tablet, enlazada por Bluetooth al HC-05, muestra la tensión del panel
+*Figura 10 — la tablet, enlazada por Bluetooth al HC-05, muestra la tensión del panel
 actualizada cada 500 ms.*
 
 Partiendo de una posición desalineada, la lectura en pantalla **sube** mientras los servos corrigen la
