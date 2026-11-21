@@ -114,9 +114,17 @@ Informe final entregado el **28 de julio de 2026** (26 páginas).
 | Dos ADS1115 con la misma dirección 0x48. | Pin `ADDR` a masa en ambos. | Dos buses I2C físicamente separados. |
 | Poca sombra cerca del cenit; estructura que se deformaba. | Tabique bajo y balso poco rígido (prototipo). | Tabique más alto y chasis impreso en 3D. |
 
+## Después de la entrega
+
+- **18 de noviembre de 2026 — recuperación del proyecto.** Se reunió el código del diseño final
+  (Verilog, banco de pruebas, `top.qsf`, `top.sdc` y `Makefile`) y se añadió
+  [NOTAS_PUESTA_EN_MARCHA.md](../src/NOTAS_PUESTA_EN_MARCHA.md) como guía rápida para volver a
+  montarlo. El código está en [`src/`](../src/).
+
 ## Pendiente en este repositorio
 
-- [ ] Subir el código Verilog a `src/rtl/` y `src/caracterizacion/`.
-- [ ] Subir `top_tb.v` y `slave_model_inc.v` a `sim/`.
-- [ ] Subir `top.qsf` y `top.sdc` a `constraints/`.
+- [x] Subir el código Verilog, el banco de pruebas y los archivos de Quartus.
+- [ ] Subir los archivos de la etapa de caracterización manual (`control_dos_servos.v`,
+  `pwm_servo.v` y su `top.v`), si se conservan.
+- [ ] Confirmar el dispositivo en `top.qsf` (`EP4CE10E22C8` frente a la tarjeta EP4CE6).
 - [ ] (Opcional) Subir los modelos CAD/STL del chasis a `hardware/`.

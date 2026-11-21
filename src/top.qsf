@@ -1,0 +1,69 @@
+##############################################################################
+##  top.qsf -- Seguidor solar: orientacion + telemetria
+##  Tarjeta: openep4ce6-c   (CoreEP4CE6 + DVK601)
+##############################################################################
+
+set_global_assignment -name FAMILY "Cyclone IV E"
+set_global_assignment -name DEVICE EP4CE10E22C8
+set_global_assignment -name TOP_LEVEL_ENTITY top
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY build
+set_global_assignment -name LAST_QUARTUS_VERSION "25.1std.0 Lite Edition"
+
+## --- ARCHIVOS FUENTE -------------------------------------------------------
+## Quartus lee ESTA lista, no la variable DESIGN del Makefile.
+## Si falta uno, quartus_map falla con "instantiates undefined entity".
+set_global_assignment -name VERILOG_FILE top.v
+set_global_assignment -name VERILOG_FILE orientacion.v
+set_global_assignment -name VERILOG_FILE i2c_master.v
+set_global_assignment -name VERILOG_FILE top_telemetry.v
+set_global_assignment -name VERILOG_FILE ads1115_reader.v
+set_global_assignment -name VERILOG_FILE uart_tx.v
+set_global_assignment -name VERILOG_FILE bin_to_ascii.v
+
+##############################################################################
+##  ASIGNACION DE PINES
+##############################################################################
+
+## Reloj de 50 MHz  (CONFIRMADO en tu proyecto original)
+set_location_assignment PIN_23  -to clk
+
+## --- ORIENTACION: identico a tu top.qsf, sin cambios ---
+set_location_assignment PIN_3   -to leds[0]
+set_location_assignment PIN_7   -to leds[1]
+set_location_assignment PIN_10  -to leds[2]
+set_location_assignment PIN_11  -to leds[3]
+set_location_assignment PIN_55  -to sda
+set_location_assignment PIN_54  -to scl
+set_location_assignment PIN_59  -to pwm_servo1
+set_location_assignment PIN_60  -to pwm_servo2
+
+## --- TELEMETRIA: pines nuevos, sin conflicto con los anteriores ---
+set_location_assignment PIN_52  -to sda_tel
+set_location_assignment PIN_51  -to scl_tel
+set_location_assignment PIN_64  -to uart_txd
+
+##############################################################################
+##  ESTANDAR DE E/S: los bancos de la CoreEP4CE6 se alimentan a 3.3 V
+##############################################################################
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to leds[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to leds[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to leds[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to leds[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to sda
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to scl
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to pwm_servo1
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to pwm_servo2
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to sda_tel
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to scl_tel
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to uart_txd
+
+##############################################################################
+##  SEGURIDAD: pines no usados en alta impedancia.
+##  Por defecto Quartus los deja como salidas a masa, lo que puede provocar
+##  cortocircuitos contra lo que tengas conectado en la DVK601.
+##############################################################################
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED"
+set_global_assignment -name SDC_FILE top.sdc
+
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS_NO_OUTPUT_GND "AS INPUT TRI-STATED"

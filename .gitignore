@@ -34,3 +34,12 @@ desktop.ini
 .DS_Store
 *.swp
 .vscode/
+
+# ---- Salidas del Makefile del curso (src/) ----
+src/build/
+src/sim/
+src/logs/
+src/reports/
+src/verilog_sources.tcl
+src/seguidor_solar/
+src/*.zip

@@ -3,7 +3,7 @@
 ![FPGA](https://img.shields.io/badge/FPGA-Cyclone%20IV%20EP4CE6-0071C5)
 ![HDL](https://img.shields.io/badge/HDL-Verilog-orange)
 ![Herramienta](https://img.shields.io/badge/Quartus%20Prime-Lite-blue)
-![Estado](terminado)
+![Estado](https://img.shields.io/badge/estado-terminado-success)
 
 Proyecto final de **Electrónica Digital 1** — Programa de Ingeniería Eléctrica, Facultad de
 Ingeniería, Universidad Nacional de Colombia, Bogotá D.C.
@@ -80,20 +80,26 @@ diseño mecánico: **[hardware/README.md](hardware/README.md)**.
 
 ## Cómo compilar y simular
 
-> El código Verilog todavía no está en el repositorio (ver [src/README.md](src/README.md)). Los pasos
-> siguientes aplican cuando se suban los archivos.
+Todo el proyecto de Quartus está en [`src/`](src/): los módulos Verilog, el banco de pruebas,
+`top.qpf`, `top.qsf`, `top.sdc` y el `Makefile` del curso. Detalles en [src/README.md](src/README.md).
 
-**Síntesis y programación (Quartus Prime Lite):**
+**Con Quartus Prime Lite (Windows o Linux):**
 
-1. Copiar los `.v` del diseño completo a `src/rtl/` y `top.qsf` / `top.sdc` a `constraints/`.
-2. Abrir el proyecto en Quartus con `top` como entidad superior (la declarada en `top.qsf`).
-3. Compilar (*Processing → Start Compilation*) y revisar en *Timing Analyzer* el reloj de 50 MHz de
-   `top.sdc`.
-4. Programar la tarjeta con *Tools → Programmer* (USB-Blaster) usando el `.sof` de `output_files/`.
+1. Abrir `src/top.qpf` en Quartus.
+2. Compilar (*Processing → Start Compilation*). Los resultados quedan en `src/build/`.
+3. Programar la tarjeta con *Tools → Programmer* (USB-Blaster) usando `build/top.sof`.
 
-**Simulación:** compilar `sim/top_tb.v` y `sim/slave_model_inc.v` junto con los módulos de `src/rtl/`
-en el simulador Verilog que se use (por ejemplo Questa – Intel FPGA Edition). El banco de pruebas
-imprime en consola la trama UART decodificada.
+**Con el flujo del curso (Linux, Makefile):** desde `src/`:
+
+```bash
+make sim     # simulación con Icarus Verilog; en consola debe salir  V: 4.85V
+make rtl     # diagrama RTL con Yosys
+make syn     # síntesis con Quartus
+make config  # programar la FPGA
+```
+
+> `make sim` genera un archivo de ondas de unos 8.7 GB. Ver
+> [src/NOTAS_PUESTA_EN_MARCHA.md](src/NOTAS_PUESTA_EN_MARCHA.md) para limitarlo.
 
 **Telemetría:** emparejar el celular con el HC-05 y abrir cualquier terminal serial Bluetooth (perfil
 SPP). Llega una línea `V: x.xxV` cada 500 ms.
@@ -136,11 +142,14 @@ automático, telemetría, chasis 3D, validación) y los problemas que se resolvi
 │   ├── resultados.md                             # pruebas y conclusiones
 │   └── progreso.md                               # bitácora de etapas
 ├── hardware/README.md                            # materiales, esquemático, pines, mecánica
-├── src/
-│   ├── rtl/                                      # diseño completo (pendiente)
-│   └── caracterizacion/                          # control manual de servos (pendiente)
-├── sim/                                          # banco de pruebas (pendiente)
-└── constraints/                                  # top.qsf, top.sdc (pendiente)
+└── src/                                          # proyecto de Quartus completo
+    ├── top.v, orientacion.v, i2c_master.v        # seguimiento
+    ├── top_telemetry.v, ads1115_reader.v,
+    │   bin_to_ascii.v, uart_tx.v                 # telemetría
+    ├── top_tb.v, slave_model_inc.v               # simulación
+    ├── top.qpf, top.qsf, top.sdc                 # proyecto, pines y reloj
+    ├── Makefile                                  # flujo del curso (sim, rtl, syn, config)
+    └── NOTAS_PUESTA_EN_MARCHA.md                 # guía rápida de montaje y depuración
 ```
 
 ## Autores

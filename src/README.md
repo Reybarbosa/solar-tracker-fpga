@@ -1,56 +1,62 @@
-# Código fuente (Verilog)
+# Código fuente y proyecto de Quartus
 
-> **Estado:** los archivos `.v` todavía no se han subido al repositorio. Esta carpeta ya tiene la
-> estructura donde van, según la jerarquía de módulos documentada en el informe
-> ([Tabla 1](../docs/arquitectura.md#jerarquía-de-módulos)).
+Todos los archivos están en la misma carpeta porque así los esperan `top.qsf` (lista de archivos
+Verilog) y el `Makefile` del curso.
 
-## `rtl/` — diseño completo (seguidor + telemetría)
+## Diseño (sintetizable)
 
-| Archivo              | Nivel       | Función |
-|----------------------|-------------|---------|
-| `top.v`              | Superior    | Instancia los dos subsistemas y genera el reset de arranque. Es la entidad superior declarada en `top.qsf`. |
-| `orientacion.v`      | Sub-nivel 1 | Lazo de seguimiento: escáner I2C de cuatro canales, lógica diferencial, PWM de ambos ejes e indicación por LED. |
-| `i2c_master.v`       | Sub-nivel 2 | Maestro I2C a 100 kHz orientado a byte, usado por `orientacion`. |
-| `top_telemetry.v`    | Sub-nivel 1 | Secuenciador de telemetría: dispara la medida, arma la trama y la entrega a la UART. |
-| `ads1115_reader.v`   | Sub-nivel 2 | Maestro I2C propio más el secuenciador de la transacción completa del ADS1115. |
-| `bin_to_ascii.v`     | Sub-nivel 2 | Conversión combinacional del código del ADC a la cadena ASCII de la trama. |
-| `uart_tx.v`          | Sub-nivel 2 | Transmisor UART 8N1 a 9 600 baudios. |
+| Archivo | Función |
+|---------|---------|
+| [`top.v`](top.v) | Nivel superior. Instancia `orientacion` y `top_telemetry` y genera el reset de arranque. |
+| [`orientacion.v`](orientacion.v) | Lazo de seguimiento: escanea los 4 LDR por I2C, calcula el error diferencial, genera el PWM de los dos servos y maneja los LEDs. |
+| [`i2c_master.v`](i2c_master.v) | Maestro I2C a 100 kHz orientado a byte, usado por `orientacion`. |
+| [`top_telemetry.v`](top_telemetry.v) | Secuenciador de telemetría: dispara la medida cada 500 ms, arma la trama y la entrega a la UART. |
+| [`ads1115_reader.v`](ads1115_reader.v) | Maestro I2C propio + secuenciador de la transacción completa con el ADS1115 del panel. |
+| [`bin_to_ascii.v`](bin_to_ascii.v) | Convierte el código del ADC en la cadena `V: x.xxV\r\n`. |
+| [`uart_tx.v`](uart_tx.v) | Transmisor UART 8N1 a 9 600 baudios. |
 
-## `caracterizacion/` — etapa previa de control manual
+## Simulación
 
-| Archivo                 | Función |
-|-------------------------|---------|
-| `top.v`                 | `top.v` de caracterización manual (Figura 5 del informe). Mueve los ejes con los pulsadores `up`, `down`, `left`, `right` y `press`. No lee sensores ni transmite nada. |
-| `control_dos_servos.v`  | Traduce las pulsaciones en consignas de 17 bits (`pulso_servo1`, `pulso_servo2`). |
-| `pwm_servo.v`           | Generador PWM de un servo (instanciado dos veces). |
+| Archivo | Función |
+|---------|---------|
+| [`top_tb.v`](top_tb.v) | Banco de pruebas del diseño completo. |
+| [`slave_model_inc.v`](slave_model_inc.v) | Modelo del esclavo ADS1115. Entrega el código 19400, así que la consola debe mostrar `V: 4.85V` (19400 / 4 = 4850 mV). |
 
-El proyecto tiene **dos** archivos `top.v`, de dos etapas distintas del desarrollo; por eso van en
-carpetas separadas.
+## Proyecto y restricciones
 
-## Verificación y restricciones
+| Archivo | Contenido |
+|---------|-----------|
+| [`top.qpf`](top.qpf) | Proyecto de Quartus. |
+| [`top.qsf`](top.qsf) | Dispositivo, lista de archivos, pines (3.3-V LVTTL) y pines no usados en alta impedancia. |
+| [`top.sdc`](top.sdc) | Reloj de 50 MHz (periodo 20 ns). |
+| [`Makefile`](Makefile) | Flujo del curso: `make sim`, `make rtl`, `make syn`, `make config`. |
+| [`NOTAS_PUESTA_EN_MARCHA.md`](NOTAS_PUESTA_EN_MARCHA.md) | Conexiones, telemetría, depuración (`DIAG_I2C`, `USE_STUB`) y comportamiento al encender. |
 
-- [`../sim/`](../sim/) → `top_tb.v` (banco de pruebas) y `slave_model_inc.v` (modelo del esclavo ADS1115).
-- [`../constraints/`](../constraints/) → `top.qsf` (pines) y `top.sdc` (reloj de 50 MHz).
+## Parámetros útiles de `top_telemetry` (en `top.v`)
 
-## Fragmento incluido en el informe
+| Parámetro | Valor en `top.v` | Para qué sirve |
+|-----------|------------------|----------------|
+| `PERIOD_MS` | `500` | Periodo de envío de la telemetría. |
+| `USE_STUB` | `1'b0` | En `1` genera una rampa interna sin usar el ADC (solo para probar el enlace Bluetooth). |
+| `DIAG_I2C` | `1'b0` | En `1` transmite `R=XXXX A` (código crudo del ADC y bandera de ACK) para depurar el bus I2C. |
 
-El único fragmento de código reproducido en el informe es la generación de PWM de los dos ejes
-dentro de `orientacion.v` (Listing 1). Se copia aquí como referencia hasta que se suba el archivo
-completo:
+## Notas
+
+- **Dispositivo:** `top.qsf` declara `EP4CE10E22C8`, mientras que la tarjeta es la Core EP4CE6 y
+  algunas cabeceras mencionan `EP4CE6E22C8`. Conviene confirmar el chip de la tarjeta y unificarlo.
+- **`make sim`** vuelca todas las señales y genera un `.vcd` de unos 8.7 GB. En
+  [NOTAS_PUESTA_EN_MARCHA.md](NOTAS_PUESTA_EN_MARCHA.md) se explica cómo limitarlo.
+- Los archivos de la etapa de caracterización manual de los servos (`control_dos_servos.v`,
+  `pwm_servo.v` y su `top.v`) no están en este repositorio; el diseño final genera el PWM dentro de
+  `orientacion.v`.
+
+### Fragmento: PWM de los dos ejes en `orientacion.v`
+
+Un solo contador de periodo alimenta las dos comparaciones, de modo que ambos servos quedan en fase:
 
 ```verilog
-// Contador de periodo: 20 ms @ 50 MHz
-reg [19:0] pwm_cnt = 0;
-always @(posedge clk) begin
-    if (pwm_cnt >= 20'd999_999) pwm_cnt <= 0;
-    else                        pwm_cnt <= pwm_cnt + 1'b1;
-end
-
-// Consignas de posicion, centradas al arranque (90 grados)
-reg [17:0] pos_h = 18'd75000; // eje horizontal (base)
-reg [17:0] pos_v = 18'd75000; // eje vertical (cabeza)
-
-// Comparacion: un solo contador, dos salidas en fase
+reg [19:0] pwm_cnt = 0; // Periodo de 20 ms @ 50 MHz
+// ...
 assign pwm_servo1 = (pwm_cnt < pos_h); // PIN_59
 assign pwm_servo2 = (pwm_cnt < pos_v); // PIN_60
 ```

@@ -263,7 +263,7 @@ El servo interpreta el ángulo por el **ancho del pulso alto**, no por el ciclo 
 - Contador de periodo de 20 bits ($\lceil\log_2 10^6\rceil = 20$); consigna de 18 bits en
   `orientacion.v` y de 17 bits (mínimo estricto, $\lceil\log_2 100\,000\rceil = 17$) en `pwm_servo`.
 - En el diseño final un único contador alimenta las dos comparaciones: ahorra lógica y deja ambos
-  servos en fase (ver el fragmento en [src/README.md](../src/README.md#fragmento-incluido-en-el-informe)).
+  servos en fase (ver [`orientacion.v`](../src/orientacion.v), líneas 251–261).
 - Resolución teórica: 0.0036° por ciclo. El paso de 250 ciclos (≈ 0.9°) se eligió a propósito,
   del orden de la zona muerta mecánica de un servo de bajo costo: pasos más finos no producen
   movimiento, solo consumo.
