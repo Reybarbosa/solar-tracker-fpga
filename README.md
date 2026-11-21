@@ -155,9 +155,9 @@ automático, telemetría, chasis 3D, validación) y los problemas que se resolvi
 ## Autores
 
 - **Reinaldo Andrés Barbosa Contreras** — rebarbosac@unal.edu.co
-- **Sebastián Menco Mier**
+- **Sebastián Menco Mier** - semencom@unal.edu.co
 
-**Docente:** Sebastián Eslava
+**Docente:** Sebastián Eslava / Diego Burgos
 
 ## Referencias
 
