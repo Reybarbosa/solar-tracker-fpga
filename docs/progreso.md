@@ -1,6 +1,6 @@
 # Bitácora de progreso
 
-Evolución del proyecto reconstruida a partir del [informe final](informe/Informe_Final_Solar_Tracker.pdf).
+Evolución del proyecto reconstruida a partir del [informe final](informe_solar_tracker.pdf).
 
 > **Sobre las fechas:** la única fecha que aparece en el informe es la de entrega del informe final,
 > **28 de julio de 2026**. El orden de las etapas sale de lo que dice el propio informe ("antes de
