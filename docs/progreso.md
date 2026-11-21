@@ -2,12 +2,6 @@
 
 Evolución del proyecto reconstruida a partir del [informe final](informe_solar_tracker.pdf).
 
-> **Sobre las fechas:** la única fecha que aparece en el informe es la de entrega del informe final,
-> **28 de julio de 2026**. El orden de las etapas sale de lo que dice el propio informe ("antes de
-> cerrar el lazo…", "etapa previa", "antes de fabricar la estructura definitiva…", "se ajustaron
-> durante la depuración…"). No se han inventado fechas intermedias. Los commits de este repositorio
-> tienen la fecha en que se publicó la documentación, no la de cada etapa.
-
 ## Resumen de etapas
 
 ```mermaid
