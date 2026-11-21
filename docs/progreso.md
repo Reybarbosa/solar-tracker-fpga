@@ -99,7 +99,7 @@ en simulación antes de la síntesis.
 
 ### Etapa 10 — Informe final
 
-Informe final entregado el **28 de julio de 2026** (26 páginas).
+Informe final entregado el **20 de noviembre de 2026** (26 páginas).
 
 ## Problemas encontrados y cómo se resolvieron
 
@@ -126,5 +126,3 @@ Informe final entregado el **28 de julio de 2026** (26 páginas).
 - [x] Subir el código Verilog, el banco de pruebas y los archivos de Quartus.
 - [ ] Subir los archivos de la etapa de caracterización manual (`control_dos_servos.v`,
   `pwm_servo.v` y su `top.v`), si se conservan.
-- [ ] Confirmar el dispositivo en `top.qsf` (`EP4CE10E22C8` frente a la tarjeta EP4CE6).
-- [ ] (Opcional) Subir los modelos CAD/STL del chasis a `hardware/`.
