@@ -2,7 +2,7 @@
 
 | Documento | Contenido |
 |-----------|-----------|
-| [informe_Solar_Tracker.pdf]() | Informe final del proyecto (26 páginas). |
+| [informe_solar_tracker.pdf]() | Informe final del proyecto (26 páginas). |
 | [arquitectura.md](arquitectura.md) | Arquitectura del sistema y diseño de cada bloque funcional (I2C, orientación, PWM, UART). |
 | [resultados.md](resultados.md) | Verificación por simulación, prueba del sistema, limitaciones y conclusiones. |
 | [progreso.md](progreso.md) | Bitácora: etapas del desarrollo y problemas resueltos. |
