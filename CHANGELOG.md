@@ -18,9 +18,6 @@ La evolución del **proyecto** (etapas de diseño, prototipos y pruebas) está e
   Se eliminaron las carpetas de relleno `src/rtl`, `src/caracterizacion`, `sim` y `constraints`.
 - README: instrucciones reales de compilación y simulación; insignia de estado corregida.
 
-### Pendiente
-- Archivos de la etapa de caracterización manual de los servos.
-
 ## [1.0.0] - 2026-11-19
 
 Primera publicación del repositorio con la documentación del proyecto entregado el 2026-07-28.
